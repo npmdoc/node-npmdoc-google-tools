@@ -1,0 +1,594 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+    >google-tools (v0.0.2)</a>
+</h1>
+<h4>Compilation of various google utility functions</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.google-tools">module google-tools</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.google-tools.deep_suggest">
+            function <span class="apidocSignatureSpan">google-tools.</span>deep_suggest
+            <span class="apidocSignatureSpan">(q, cb)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.google-tools.pagerank">
+            function <span class="apidocSignatureSpan">google-tools.</span>pagerank
+            <span class="apidocSignatureSpan">(p, cb)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.google-tools.pagerankAvg">
+            function <span class="apidocSignatureSpan">google-tools.</span>pagerankAvg
+            <span class="apidocSignatureSpan">(p, cb)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.google-tools.position">
+            function <span class="apidocSignatureSpan">google-tools.</span>position
+            <span class="apidocSignatureSpan">(p, cb)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.google-tools.search">
+            function <span class="apidocSignatureSpan">google-tools.</span>search
+            <span class="apidocSignatureSpan">(opts, cb)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.google-tools.suggest">
+            function <span class="apidocSignatureSpan">google-tools.</span>suggest
+            <span class="apidocSignatureSpan">(q, cb)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">google-tools.</span>google_search</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">google-tools.</span>google_suggest</span>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.google-tools.google_search">module google-tools.google_search</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.google-tools.google_search.search">
+            function <span class="apidocSignatureSpan">google-tools.google_search.</span>search
+            <span class="apidocSignatureSpan">(opts, cb)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.google-tools.google_suggest">module google-tools.google_suggest</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.google-tools.google_suggest.suggest">
+            function <span class="apidocSignatureSpan">google-tools.google_suggest.</span>suggest
+            <span class="apidocSignatureSpan">(q, cb)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.google-tools" id="apidoc.module.google-tools">module google-tools</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.google-tools.deep_suggest" id="apidoc.element.google-tools.deep_suggest">
+        function <span class="apidocSignatureSpan">google-tools.</span>deep_suggest
+        <span class="apidocSignatureSpan">(q, cb)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">deep_suggest = function (q, cb) {
+    var i = 0;
+    var next = function(items, cb) {
+        if(i == 26) cb(null, items);
+        else suggest({q: q.q+&#x22;+&#x22;+String.fromCharCode(97+(i++)) }, function(err, r) {
+            next(items.concat(r), cb);
+        });
+    };
+    next([], cb);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+google.suggest({
+    q: &#x27;roger federer&#x27;
+}, function(err, r) {
+    console.log(err, r);
+});
+
+google.<span class="apidocCodeKeywordSpan">deep_suggest</span>({
+    q: &#x27;roger federer&#x27;
+}, function(err, r) {
+    console.log(err, r);
+});
+
+
+google.search({
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.google-tools.pagerank" id="apidoc.element.google-tools.pagerank">
+        function <span class="apidocSignatureSpan">google-tools.</span>pagerank
+        <span class="apidocSignatureSpan">(p, cb)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">pagerank = function (p, cb) {
+    new PageRank(p.url, cb);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+# google-pack
+
+## Usage
+
+var google = require(&#x27;google-tools&#x27;);
+
+// Get pagerank
+google.<span class="apidocCodeKeywordSpan">pagerank</span>({
+  url: &#x27;http://www.github.com/&#x27;
+}, function(err, r) {
+    console.log(err, r);
+});
+
+// Google search
+google.search({
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.google-tools.pagerankAvg" id="apidoc.element.google-tools.pagerankAvg">
+        function <span class="apidocSignatureSpan">google-tools.</span>pagerankAvg
+        <span class="apidocSignatureSpan">(p, cb)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">pagerankAvg = function (p, cb) {
+    google.search(p, function(err, results) {
+        if(err) { return cb(err, null); }
+
+        async.mapSeries(results.results, function(r, cb) {
+            google.pagerank({
+                url: r.link
+            }, cb);
+        }, function(err, results) {
+            if(err) { return cb(err, null); }
+
+            var sum = results.reduce(function(a,b){return a+b;})
+            cb(null, Math.floor(100*sum/results.length)/100);
+        });
+
+    });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+    q: &#x27;google search options&#x27;,
+    num: 50, // max 100
+    hl: &#x27;fr&#x27;
+}, function(err, r) {
+    console.log(err, r);
+});
+
+google.<span class="apidocCodeKeywordSpan">pagerankAvg</span>({
+    q: &#x27;cool keywords&#x27;,
+    num: 20
+}, function(err, r) {
+    console.log(err, r);
+});
+
+google.position({
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.google-tools.position" id="apidoc.element.google-tools.position">
+        function <span class="apidocSignatureSpan">google-tools.</span>position
+        <span class="apidocSignatureSpan">(p, cb)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">position = function (p, cb) {
+    google.search(p, function(err, results) {
+        if(err) { return cb(err, null); }
+
+        for(var i = 0 ; i &#x3c; results.results.length; i++) {
+            if(results.results[i].link.substr(0, p.url.length) === p.url) {
+                cb(null, i+1);
+                return;
+            }
+        }
+
+        cb(null, -1);
+    });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+google.pagerankAvg({
+    q: &#x27;cool keywords&#x27;,
+    num: 20
+}, function(err, r) {
+    console.log(err, r);
+});
+
+google.<span class="apidocCodeKeywordSpan">position</span>({
+    url: &#x27;http://en.wikipedia.org&#x27;,
+    q: &#x27;tomato&#x27;,
+    num: 100, // maximum position
+    start: 0
+}, function(err, r) {
+    console.log(err, r);
+});
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.google-tools.search" id="apidoc.element.google-tools.search">
+        function <span class="apidocSignatureSpan">google-tools.</span>search
+        <span class="apidocSignatureSpan">(opts, cb)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">search = function (opts, cb) {
+
+   var p = {
+      q: opts.q
+   };
+
+   for(var k in opts) {
+      p[k] = opts[k];
+   }
+
+   if(!p.hl) {
+      p.hl = &#x27;en&#x27;;
+   }
+
+   var url = &#x27;http://www.google.com/search?&#x27;+querystring.stringify(p);
+
+   request(url, function (error, response, body) {
+      if (error) {
+          cb(error, null);
+          return;
+      }
+      else if (response.statusCode == 200) {
+
+         var handler = new htmlparser.DefaultHandler(function (error, dom) {
+             if (error) {
+                cb(error, null);
+                return;
+             }
+             else {
+                var results = formatGoogleResponse(dom);
+
+                cb(null, results);
+
+             }
+         }, {
+            verbose: false,
+            ignoreWhitespace: true
+         });
+         var parser = new htmlparser.Parser(handler);
+         parser.parseComplete(body);
+     }
+
+   });
+
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+google.pagerank({
+  url: &#x27;http://www.github.com/&#x27;
+}, function(err, r) {
+    console.log(err, r);
+});
+
+// Google search
+google.<span class="apidocCodeKeywordSpan">search</span>({
+    //as_epq: &#x27;google search options&#x27;,
+    //lr: &#x27;fr&#x27;
+    q: &#x27;google search options&#x27;,
+    num: 50, // max 100
+    hl: &#x27;fr&#x27;
+}, function(err, r) {
+    console.log(err, r);
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.google-tools.suggest" id="apidoc.element.google-tools.suggest">
+        function <span class="apidocSignatureSpan">google-tools.</span>suggest
+        <span class="apidocSignatureSpan">(q, cb)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">suggest = function (q, cb) {
+
+   var req = http.request({
+      host: &#x27;www.google.com&#x27;,
+      port: 80,
+      path: &#x27;/s?&#x27;+querystring.stringify({ q: q.q }),
+      method: &#x27;GET&#x27;
+    }, function(res) {
+     res.setEncoding(&#x27;utf8&#x27;);
+     var body = &#x22;&#x22;;
+     res.on(&#x27;data&#x27;, function (chunk) { body += chunk; });
+     res.on(&#x27;end&#x27;, function() {
+        var items;
+        body = body.substr(19, body.length-19-1); // remove the jsonp callback
+        try {
+           items = JSON.parse(body)[1].map(function(k) { return k[0]; });
+        }
+        catch(ex) {
+           cb(ex, null);
+        }
+
+        cb(null, items);
+     });
+   });
+   req.on(&#x27;error&#x27;, function(e) { cb(null, e); });
+   req.end();
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+    q: &#x27;tomato&#x27;,
+    num: 100, // maximum position
+    start: 0
+}, function(err, r) {
+    console.log(err, r);
+});
+
+google.<span class="apidocCodeKeywordSpan">suggest</span>({
+    q: &#x27;roger federer&#x27;
+}, function(err, r) {
+    console.log(err, r);
+});
+
+google.deep_suggest({
+    q: &#x27;roger federer&#x27;
+...</pre></li>
+    </ul>
+
+
+
+
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.google-tools.google_search" id="apidoc.module.google-tools.google_search">module google-tools.google_search</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.google-tools.google_search.search" id="apidoc.element.google-tools.google_search.search">
+        function <span class="apidocSignatureSpan">google-tools.google_search.</span>search
+        <span class="apidocSignatureSpan">(opts, cb)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">search = function (opts, cb) {
+
+   var p = {
+      q: opts.q
+   };
+
+   for(var k in opts) {
+      p[k] = opts[k];
+   }
+
+   if(!p.hl) {
+      p.hl = &#x27;en&#x27;;
+   }
+
+   var url = &#x27;http://www.google.com/search?&#x27;+querystring.stringify(p);
+
+   request(url, function (error, response, body) {
+      if (error) {
+          cb(error, null);
+          return;
+      }
+      else if (response.statusCode == 200) {
+
+         var handler = new htmlparser.DefaultHandler(function (error, dom) {
+             if (error) {
+                cb(error, null);
+                return;
+             }
+             else {
+                var results = formatGoogleResponse(dom);
+
+                cb(null, results);
+
+             }
+         }, {
+            verbose: false,
+            ignoreWhitespace: true
+         });
+         var parser = new htmlparser.Parser(handler);
+         parser.parseComplete(body);
+     }
+
+   });
+
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+google.pagerank({
+  url: &#x27;http://www.github.com/&#x27;
+}, function(err, r) {
+    console.log(err, r);
+});
+
+// Google search
+google.<span class="apidocCodeKeywordSpan">search</span>({
+    //as_epq: &#x27;google search options&#x27;,
+    //lr: &#x27;fr&#x27;
+    q: &#x27;google search options&#x27;,
+    num: 50, // max 100
+    hl: &#x27;fr&#x27;
+}, function(err, r) {
+    console.log(err, r);
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.google-tools.google_suggest" id="apidoc.module.google-tools.google_suggest">module google-tools.google_suggest</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.google-tools.google_suggest.suggest" id="apidoc.element.google-tools.google_suggest.suggest">
+        function <span class="apidocSignatureSpan">google-tools.google_suggest.</span>suggest
+        <span class="apidocSignatureSpan">(q, cb)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">suggest = function (q, cb) {
+
+   var req = http.request({
+      host: &#x27;www.google.com&#x27;,
+      port: 80,
+      path: &#x27;/s?&#x27;+querystring.stringify({ q: q.q }),
+      method: &#x27;GET&#x27;
+    }, function(res) {
+     res.setEncoding(&#x27;utf8&#x27;);
+     var body = &#x22;&#x22;;
+     res.on(&#x27;data&#x27;, function (chunk) { body += chunk; });
+     res.on(&#x27;end&#x27;, function() {
+        var items;
+        body = body.substr(19, body.length-19-1); // remove the jsonp callback
+        try {
+           items = JSON.parse(body)[1].map(function(k) { return k[0]; });
+        }
+        catch(ex) {
+           cb(ex, null);
+        }
+
+        cb(null, items);
+     });
+   });
+   req.on(&#x27;error&#x27;, function(e) { cb(null, e); });
+   req.end();
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+    q: &#x27;tomato&#x27;,
+    num: 100, // maximum position
+    start: 0
+}, function(err, r) {
+    console.log(err, r);
+});
+
+google.<span class="apidocCodeKeywordSpan">suggest</span>({
+    q: &#x27;roger federer&#x27;
+}, function(err, r) {
+    console.log(err, r);
+});
+
+google.deep_suggest({
+    q: &#x27;roger federer&#x27;
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
